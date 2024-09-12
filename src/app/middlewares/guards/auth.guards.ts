@@ -1,20 +1,24 @@
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 
-export const privateGuard = (): CanActivateFn => {
+export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
-  return false;
-  return () => {
-    const token = authService.getToken();
-    return !!token;
-  };
-};
+  const router = inject(Router);
 
-export const publicGuard = (): CanActivateFn => {
-  const authService = inject(AuthService);
-  return () => {
-    const token = authService.getToken();
-    return !token;
-  };
+  const token = authService.getToken();
+
+  console.log('Token:', token);
+
+  if (!token) {
+    router.navigate(['/login']).then(success => {
+      if (success) {
+        console.log('Redirección exitosa');
+      } else {
+        console.log('Error en la redirección');
+      }
+    });
+    return false;
+  }
+  return true;
 };

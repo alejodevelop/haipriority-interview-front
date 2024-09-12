@@ -1,0 +1,18 @@
+.formContainer {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 100vh; /* Altura de la pantalla */
+}
+
+@media screen and (max-width: 768px) {
+  .formContainer {
+
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .formContainer {
+
+  }
+}

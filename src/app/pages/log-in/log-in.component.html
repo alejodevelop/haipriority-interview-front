@@ -1,0 +1,42 @@
+<form [formGroup]="loginForm" class="formContainer">
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input
+                matInput
+                placeholder="alejo@example.com"
+                formControlName="email"
+                (blur)="errorEmailMessage()"
+                required
+        />
+        @if (errorEmailMessage() != '') {
+            <mat-error>{{ errorEmailMessage() }}</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password"
+               required
+               (blur)="errorPasswordMessage()"
+               [type]="hide() ? 'password' : 'text'"
+        />
+        <button
+                mat-icon-button
+                matSuffix
+                (click)="clickEvent($event)"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide()"
+        >
+            <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (errorPasswordMessage() != '') {
+            <mat-error>{{ errorPasswordMessage() }}</mat-error>
+        }
+    </mat-form-field>
+
+    @if (errorEmailMessage() != '' || errorPasswordMessage() != '') {
+        <button mat-raised-button color="primary" [disabled]="true">Log in</button>
+    } @else {
+        <button mat-raised-button color="primary" [disabled]="false">Log in</button>
+    }
+</form>
