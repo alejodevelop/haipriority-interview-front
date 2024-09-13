@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
+import {LoginData} from "../pages/log-in/dto/loginData";
+import {HttpService} from "../shared/services/http.service";
+import {LoginResponse} from "../pages/log-in/dto/loginResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -8,16 +10,24 @@ import {Observable} from 'rxjs';
 export class AuthService {
   private token: string | null = null;
 
-  constructor(private http: HttpClient) {
+  constructor(private httpService: HttpService) {
   }
 
-  requestToken(): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>('https://api.example.com/token', {});
+  requestToken(loginData: LoginData): Observable<LoginResponse> {
+    const formData = new FormData();
+    formData.append('username', loginData.username ?? '');
+    formData.append('password', loginData.password ?? '');
+
+    return this.httpService.postFormData<LoginResponse>('token', formData).pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
   }
 
   getToken(): string | null {
     if (!this.token) {
-      this.token = localStorage.getItem('authToken');
+      this.token = localStorage.getItem('access_token');
     }
     return this.token;
   }
@@ -25,13 +35,13 @@ export class AuthService {
   setToken(token: string): string | null {
     this.token = token;
     if (!this.token) {
-      this.token = localStorage.getItem('authToken');
+      this.token = localStorage.getItem('access_token');
     }
     return this.token;
   }
 
   clearToken(): void {
     this.token = null;
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('access_token');
   }
 }

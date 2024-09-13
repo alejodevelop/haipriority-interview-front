@@ -38,16 +38,24 @@
         }
       </mat-form-field>
 
+
       @if (errorEmailMessage() != '' || errorPasswordMessage() != '') {
         <button type="submit" mat-raised-button color="primary" [disabled]="true">Log in</button>
       } @else {
         <button type="submit" mat-raised-button color="primary" [disabled]="false">Log in</button>
       }
+
+      <div class="login-error">
+        @if (errorLoginMessage() != '') {
+          <mat-error>{{ errorLoginMessage() }}</mat-error>
+        }
+      </div>
+
     </form>
   </div>
 
   <div class="background-image">
-    <h1 class="background-title">Noctura Bank</h1>
+    <h1 class="background-title">Banco Centenario</h1>
   </div>
 
 </div>

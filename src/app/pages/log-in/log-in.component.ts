@@ -5,7 +5,9 @@ import {MatFormFieldModule, MatError} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIcon} from "@angular/material/icon";
 import {MatButton, MatIconButton} from "@angular/material/button";
-import {HttpService} from '../../shared/services/http.service';
+import {LoginData} from "./dto/loginData";
+import {LoginResponse} from "./dto/loginResponse";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-log-in',
@@ -21,8 +23,9 @@ export class LogInComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
+  loginErrorResponse: string = '';
 
-  constructor(private httpService: HttpService) {
+  constructor(private authService: AuthService) {
   }
 
   clickEvent(event: MouseEvent) {
@@ -35,25 +38,33 @@ export class LogInComponent {
     event.preventDefault();
 
     if (this.loginForm.valid) {
-      const loginData = this.loginForm.value;
-      console.log(loginData);
+      const loginData: LoginData = {
+        username: this.loginForm.value.email as NonNullable<string>,
+        password: this.loginForm.value.password as NonNullable<string>
+      };
 
-      const formData = new FormData();
-      formData.append('username', loginData.email ?? '');
-      formData.append('password', loginData.password ?? '');
+      this.authService.requestToken(loginData).subscribe({
+        next: this.handleSuccessfulResponse.bind(this),
+        error: this.handleError.bind(this)
+      });
+    }
+  }
 
-      console.log('Sending login request as FormData', formData);
+  handleSuccessfulResponse(response: LoginResponse) {
+    if (response?.access_token) {
+      this.loginErrorResponse = '';
+      console.log('Login successful', response);
+      this.authService.setToken(response.access_token);
+    }
+  }
 
-      this.httpService.postFormData('token', formData).subscribe(
-        response => {
-          // Handle the server response
-          console.log('Login successful', response);
-        },
-        error => {
-          // Handle the error
-          console.error('Login failed', error);
-        }
-      );
+  handleError(error: any) {
+    console.error('Login error', error);
+
+    if (error?.error?.detail) {
+      this.loginErrorResponse = error.error.detail;
+    } else {
+      this.loginErrorResponse = 'Unknown error occurred during login';
     }
   }
 
@@ -76,6 +87,13 @@ export class LogInComponent {
       return 'Password must be at least 6 characters';
     }
 
+    return '';
+  }
+
+  errorLoginMessage() {
+    if (this.loginErrorResponse != '') {
+      return this.loginErrorResponse;
+    }
     return '';
   }
 
