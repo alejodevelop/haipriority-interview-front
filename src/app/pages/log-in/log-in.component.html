@@ -1,7 +1,13 @@
 <div class="container">
 
   <app-auth-form [errorResponseAfterRequest]="errorResponseAfterRequest"
-                 (submitForm)="handleFormSubmit($event)"></app-auth-form>
+                 (submitForm)="handleFormSubmit($event)">
+
+    <br>
+    <p>¿No tienes cuenta?</p>
+    <a style="text-decoration: none" routerLink="/signup">Regístrate</a>
+
+  </app-auth-form>
 
   <div class="banner">
     <app-banner></app-banner>

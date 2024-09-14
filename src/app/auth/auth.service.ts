@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable, throwError} from 'rxjs';
-import {LoginData} from "../pages/log-in/dto/loginData";
+import {LoginData} from "../shared/dto/loginData";
 import {HttpService} from "../shared/services/http.service";
-import {LoginResponse} from "../pages/log-in/dto/loginResponse";
+import {LoginResponse} from "../shared/dto/loginResponse";
 
 @Injectable({
   providedIn: 'root'

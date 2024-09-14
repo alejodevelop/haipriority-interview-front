@@ -5,11 +5,12 @@ import {MatFormFieldModule, MatError} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIcon} from "@angular/material/icon";
 import {MatButton, MatIconButton} from "@angular/material/button";
-import {LoginData} from "./dto/loginData";
-import {LoginResponse} from "./dto/loginResponse";
+import {LoginData} from "../../shared/dto/loginData";
+import {LoginResponse} from "../../shared/dto/loginResponse";
 import {AuthService} from "../../auth/auth.service";
 import {BannerComponent} from "../../shared/components/banner/banner.component";
 import {AuthFormComponent} from "../../shared/components/auth-form/auth-form.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-log-in',
@@ -25,7 +26,8 @@ import {AuthFormComponent} from "../../shared/components/auth-form/auth-form.com
     MatButton,
     NgOptimizedImage,
     BannerComponent,
-    AuthFormComponent
+    AuthFormComponent,
+    RouterLink
   ],
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.css']

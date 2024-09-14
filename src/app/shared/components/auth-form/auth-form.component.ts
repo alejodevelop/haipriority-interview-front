@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, Output, signal} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, signal} from '@angular/core';
 import {BannerComponent} from "../banner/banner.component";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatError, MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-auth-form',
@@ -25,7 +26,7 @@ import {MatInput} from "@angular/material/input";
   templateUrl: './auth-form.component.html',
   styleUrl: './auth-form.component.css'
 })
-export class AuthFormComponent {
+export class AuthFormComponent implements OnInit {
   hide = signal(true);
   @Input() formTitle: string = 'Bienvenido 👋';
   @Input() errorResponseAfterRequest: string = '';
@@ -33,10 +34,19 @@ export class AuthFormComponent {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const email = params['email'];
+      if (email) {
+        this.loginForm.patchValue({email});
+      }
     });
   }
 
