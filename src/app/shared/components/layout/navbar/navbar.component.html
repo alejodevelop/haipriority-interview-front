@@ -1,19 +1,43 @@
-<nav>
-  <ul>
-    <li>
-      <a routerLink="/home" routerLinkActive="active">Dashboard</a>
-    </li>
-    <li>
-      <a routerLink="/debitos" routerLinkActive="active">Tarjetas Debito</a>
-    </li>
-    <li>
-      <a routerLink="/creditos" routerLinkActive="active">Tarjetas Credito</a>
-    </li>
-    <li>
-      <a routerLink="/prestamos" routerLinkActive="active">Prestamos</a>
-    </li>
-    <li>
-      <a routerLink="/pagos" routerLinkActive="active">Pagos</a>
-    </li>
-  </ul>
-</nav>
+<mat-drawer-container class="container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="side">
+
+    <button type="button" mat-button (click)="toggleDrawer(drawer)">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <nav>
+      <ul>
+        <li>
+          <a routerLink="/home" routerLinkActive="active">Home</a>
+        </li>
+        <li>
+          <a routerLink="/debitos" routerLinkActive="active">Tarjetas Debito</a>
+        </li>
+        <li>
+          <a routerLink="/creditos" routerLinkActive="active">Tarjetas Crédito</a>
+        </li>
+        <li>
+          <a routerLink="/prestamos" routerLinkActive="active">Prestamos</a>
+        </li>
+        <li>
+          <a routerLink="/pagos" routerLinkActive="active">Pagos</a>
+        </li>
+      </ul>
+    </nav>
+
+  </mat-drawer>
+
+  @if (!isExpanded) {
+    <button class="outer-menu-button" type="button" mat-button (click)="toggleDrawer(drawer)">
+      <mat-icon>menu</mat-icon>
+    </button>
+  }
+
+  <div class="main-content">
+    <router-outlet></router-outlet>
+
+  </div>
+
+  <app-footer></app-footer>
+
+</mat-drawer-container>
