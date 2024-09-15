@@ -10,7 +10,7 @@ import {LoginResponse} from "../../shared/dto/loginResponse";
 import {AuthService} from "../../auth/auth.service";
 import {BannerComponent} from "../../shared/components/banner/banner.component";
 import {AuthFormComponent} from "../../shared/components/auth-form/auth-form.component";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-log-in',
@@ -36,7 +36,7 @@ export class LogInComponent {
 
   errorResponseAfterRequest: string = '';
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   handleFormSubmit(formData: FormGroup) {
@@ -57,6 +57,7 @@ export class LogInComponent {
     if (response?.access_token) {
       this.errorResponseAfterRequest = '';
       this.authService.setToken(response.access_token);
+      this.router.navigate(['/home']);
     }
   }
 

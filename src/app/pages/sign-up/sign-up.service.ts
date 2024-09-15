@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from "../../shared/services/http.service";
 import {catchError, Observable, throwError} from "rxjs";
-import {UsuarioResponse} from "../../shared/dto/usuarioResponse";
+import {UserResponse} from "../../shared/dto/userResponse";
 import {LoginData} from "../../shared/dto/loginData";
 
 
@@ -13,8 +13,8 @@ export class SignUpService {
   constructor(private httpService: HttpService) {
   }
 
-  createUsuario(usuario: LoginData): Observable<UsuarioResponse> {
-    return this.httpService.post<UsuarioResponse>('usuario', usuario).pipe(
+  createUser(user: LoginData): Observable<UserResponse> {
+    return this.httpService.post<UserResponse>('user', user).pipe(
       catchError(error => {
         return throwError(() => error);
       })

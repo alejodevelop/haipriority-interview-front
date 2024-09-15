@@ -3,6 +3,8 @@ import {catchError, Observable, throwError} from 'rxjs';
 import {LoginData} from "../shared/dto/loginData";
 import {HttpService} from "../shared/services/http.service";
 import {LoginResponse} from "../shared/dto/loginResponse";
+import {jwtDecode} from 'jwt-decode';
+
 
 @Injectable({
   providedIn: 'root'
@@ -29,13 +31,19 @@ export class AuthService {
     if (!this.token) {
       this.token = localStorage.getItem('access_token');
     }
+    if (this.token && this.isTokenExpired(this.token)) {
+      this.clearToken();
+      return null;
+    }
     return this.token;
   }
 
   setToken(token: string): string | null {
     this.token = token;
+    localStorage.setItem('access_token', token);
     if (!this.token) {
       this.token = localStorage.getItem('access_token');
+      console.log('Token:', this.token);
     }
     return this.token;
   }
@@ -43,5 +51,15 @@ export class AuthService {
   clearToken(): void {
     this.token = null;
     localStorage.removeItem('access_token');
+  }
+
+  private isTokenExpired(token: string): boolean {
+    const decoded: any = jwtDecode(token);
+    if (decoded.exp) {
+      const expirationDate = new Date(0);
+      expirationDate.setUTCSeconds(decoded.exp);
+      return expirationDate < new Date();
+    }
+    return false;
   }
 }

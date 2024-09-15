@@ -4,7 +4,7 @@ import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {AuthFormComponent} from "../../shared/components/auth-form/auth-form.component";
 import {BannerComponent} from "../../shared/components/banner/banner.component";
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
-import {UsuarioResponse} from "../../shared/dto/usuarioResponse";
+import {UserResponse} from "../../shared/dto/userResponse";
 import {SignUpService} from "./sign-up.service";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
@@ -25,14 +25,14 @@ export class SignUpComponent {
 
   handleFormSubmit(formData: FormGroup) {
     if (formData) {
-      this.signUpService.createUsuario(formData.value).subscribe({
+      this.signUpService.createUser(formData.value).subscribe({
         next: this.handleSuccessfulResponse.bind(this),
         error: this.handleError.bind(this)
       });
     }
   }
 
-  handleSuccessfulResponse(response: UsuarioResponse) {
+  handleSuccessfulResponse(response: UserResponse) {
     if (response?.id && response?.email) {
       this.errorResponseAfterRequest = '';
 
