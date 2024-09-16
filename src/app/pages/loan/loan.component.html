@@ -1,1 +1,31 @@
-<p>loan works!</p>
+<div class="container">
+  <h1 class="page-title">Gestión de Préstamos</h1>
+
+  <button mat-raised-button (click)="createLoan()" class="create-loan-button">
+    <mat-icon>add</mat-icon>
+    Crear Préstamo
+  </button>
+
+  @for (loan of loanList; track loan.id) {
+    <div class="loan-section">
+      <div class="loan-wrapper">
+        <p><strong>Préstamo ID:</strong> {{ loan.id }}</p>
+        <p><strong>Monto:</strong> {{ loan.amount | currency }}</p>
+        <p><strong>Tasa de Interés:</strong> {{ loan.interest_rate * 100 }}%</p>
+        <p><strong>Balance:</strong> {{ loan.balance | currency }}</p>
+        <p><strong>Fecha de Inicio:</strong> {{ loan.start_date | date }}</p>
+        <p><strong>Fecha de Fin:</strong> {{ loan.end_date | date }}</p>
+        <div class="loan-actions">
+          <button (click)="payoffLoan(loan.id, 100)" class="action-button">Pagar Deuda</button>
+          <button (click)="deleteLoan(loan.id)" class="action-button delete-button">Eliminar Préstamo</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (errorResponseAfterRequest != '') {
+    <div class="error-message">
+      {{ errorResponseAfterRequest }}
+    </div>
+  }
+</div>

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import Swal from "sweetalert2";
 import {CreditCardData} from "../../dto/creditCardData";
 import {DebitCardData} from "../../dto/debitCardData";
@@ -25,7 +25,7 @@ import {PayService} from "./pay.service";
   templateUrl: './pay.component.html',
   styleUrls: ['./pay.component.css']
 })
-export class PayComponent {
+export class PayComponent implements OnInit {
 
   creditCardList: CreditCardData[] = [];
   debitCardList: DebitCardData[] = [];
@@ -38,36 +38,36 @@ export class PayComponent {
     private debitService: DebitService,
     private payService: PayService
   ) {
-    this.loadCards();
+
   }
 
-  async loadCards() {
-    this.creditCardStore.cardList$.subscribe(async cardList => {
-      if (cardList.length === 0) {
-        try {
-          const creditCards = await lastValueFrom(this.creditService.getCreditCards());
-          this.creditCardStore.setCardList(creditCards);
-        } catch (error) {
-          this.handleError(error);
-        }
-      } else {
-        this.creditCardList = cardList;
+  ngOnInit() {
+    this.creditService.getCreditCards().subscribe({
+      next: (creditCards: CreditCardData[]) => {
+        this.creditCardStore.setCardList(creditCards);
+      },
+      error: (error) => {
+        this.handleError(error);
       }
     });
 
-    this.debitCardStore.cardList$.subscribe(async cardList => {
-      if (cardList.length === 0) {
-        try {
-          const debitCards = await lastValueFrom(this.debitService.getDebitCards());
-          this.debitCardStore.setCardList(debitCards);
-        } catch (error) {
-          this.handleError(error);
-        }
-      } else {
-        this.debitCardList = cardList;
+    this.debitService.getDebitCards().subscribe({
+      next: (debitCards: DebitCardData[]) => {
+        this.debitCardStore.setCardList(debitCards);
+      },
+      error: (error) => {
+        this.handleError(error);
       }
     });
+
+    this.creditCardStore.cardList$.subscribe(cardList => {
+      this.creditCardList = cardList;
+    });
+    this.debitCardStore.cardList$.subscribe(cardList => {
+      this.debitCardList = cardList;
+    });
   }
+
 
   async payWithCreditCard(cardNumber: string, amount: number) {
     try {

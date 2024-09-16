@@ -1,0 +1,81 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #3f51b5;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.create-loan-button {
+  display: block;
+  margin: 0 auto 20px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.create-loan-button:hover {
+  transform: scale(1.05);
+}
+
+.loan-section {
+  margin-bottom: 20px;
+}
+
+.loan-wrapper {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+
+.loan-wrapper:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.loan-wrapper p {
+  margin: 10px 0;
+}
+
+.loan-actions {
+  margin-top: 15px;
+}
+
+.action-button {
+  padding: 10px 20px;
+  font-size: 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-button:hover {
+  transform: scale(1.05);
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
+.error-message {
+  color: #e74c3c;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 18px;
+}
