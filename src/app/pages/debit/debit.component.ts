@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import {MatError} from "@angular/material/form-field";
 import {ExpirationDatePipe} from "../../shared/pipes/expiration-date.pipe";
 import {lastValueFrom} from "rxjs";
+import {DebitCardStoreService} from "../../stores/debit-card-store.service";
 
 @Component({
   selector: 'app-debit',
@@ -27,7 +28,7 @@ export class DebitComponent implements OnInit {
   cardList: DebitCardData[] = [];
   errorResponseAfterRequest: string = '';
 
-  constructor(private debitService: DebitService) {
+  constructor(private debitService: DebitService, private debitCardStore: DebitCardStoreService) {
   }
 
   ngOnInit() {
@@ -35,6 +36,10 @@ export class DebitComponent implements OnInit {
     this.debitService.getDebitCards().subscribe({
       next: this.handleSuccessfulResponse.bind(this),
       error: this.handleError.bind(this)
+    });
+
+    this.debitCardStore.cardList$.subscribe(cardList => {
+      this.cardList = cardList;
     });
 
   }
@@ -85,6 +90,7 @@ export class DebitComponent implements OnInit {
           } as DebitCardData));
 
           this.cardList.push(response);
+          this.debitCardStore.setCardList(this.cardList);
           this.errorResponseAfterRequest = '';
 
           await Swal.fire({
@@ -144,7 +150,7 @@ export class DebitComponent implements OnInit {
             }
             return card;
           });
-
+          this.debitCardStore.setCardList(this.cardList);
           this.errorResponseAfterRequest = '';
 
           await Swal.fire({
@@ -177,6 +183,7 @@ export class DebitComponent implements OnInit {
         this.debitService.deleteDebitCard(cardNumber).subscribe({
           next: () => {
             this.cardList = this.cardList.filter(card => card.card_number !== cardNumber);
+            this.debitCardStore.setCardList(this.cardList);
           },
           error: this.handleError.bind(this)
         });
@@ -195,7 +202,7 @@ export class DebitComponent implements OnInit {
     if (response) {
       this.errorResponseAfterRequest = '';
       this.cardList = response;
-      console.log(response);
+      this.debitCardStore.setCardList(response);
     }
   }
 

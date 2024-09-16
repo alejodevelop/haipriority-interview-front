@@ -1,18 +1,19 @@
 .container {
   padding: 20px;
   text-align: center;
+  max-width: 1200px; /* Limita el ancho máximo del contenedor */
+  margin: 0 auto; /* Centra el contenedor */
 }
 
 .page-title {
-  font-size: 2rem;
-  margin-bottom: 20px;
+  font-size: 2.5rem; /* Aumenta el tamaño de la fuente */
+  margin-bottom: 30px;
+  font-weight: bold;
+  color: #3f51b5; /* Color primario de Material Design */
 }
 
-.add-card-button {
-  margin-bottom: 20px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+.add-card-button:first-of-type {
+  margin-top: 15px;
 }
 
 .card-list {
@@ -23,25 +24,50 @@
 }
 
 .card-container {
-  flex: 1 1 calc(33.333% - 40px); /* Tres tarjetas por fila con espacio entre ellas */
-  max-width: calc(33.333% - 40px);
+  flex: 1 1 calc(25% - 40px); /* Cuatro tarjetas por fila en pantallas grandes */
+  max-width: calc(25% - 40px);
+  background-color: #f9f9f9; /* Fondo de la tarjeta */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para las tarjetas */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-sizing: border-box;
 }
 
+.card-container:hover {
+  transform: translateY(-5px); /* Efecto de elevación en hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada en hover */
+}
+
 .balance {
-  font-size: 1.2rem;
-  color: green;
+  font-size: 1.4rem;
+  color: #4caf50;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 mat-error {
   font-size: 1rem;
-  color: red;
+  color: #f44336; /* Rojo Material Design */
+  margin-top: 10px;
+}
+
+@media (max-width: 1024px) {
+  .card-container {
+    flex: 1 1 calc(33.333% - 40px); /* Tres tarjetas por fila en pantallas medianas */
+    max-width: calc(33.333% - 40px);
+  }
 }
 
 @media (max-width: 768px) {
   .card-container {
-    flex: 1 1 calc(50% - 40px); /* Dos tarjetas por fila en pantallas medianas */
+    flex: 1 1 calc(50% - 40px); /* Dos tarjetas por fila en pantallas más pequeñas */
     max-width: calc(50% - 40px);
+  }
+
+  .add-card-button {
+    padding: 10px 20px; /* Ajuste del padding en pantallas medianas */
+    font-size: 0.9rem;
   }
 }
 
@@ -49,5 +75,10 @@ mat-error {
   .card-container {
     flex: 1 1 100%; /* Una tarjeta por fila en pantallas pequeñas */
     max-width: 100%;
+  }
+
+  .add-card-button {
+    width: 100%; /* Botón de ancho completo en pantallas pequeñas */
+    justify-content: center; /* Centra el contenido del botón */
   }
 }

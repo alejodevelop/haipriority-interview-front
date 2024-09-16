@@ -1,1 +1,57 @@
-<p>pay works!</p>
+<div class="container">
+  <h1 class="page-title">Realizar Pagos</h1>
+
+  <div class="card-section">
+    <h2>Tarjetas de Crédito</h2>
+    @for (card of creditCardList; track card.card_number) {
+      <div class="card-wrapper">
+        <app-card
+          [cardNumber]="card.card_number"
+          [cardHolder]="card.card_holder_name"
+          [expirationDate]="card.expiration_date | expirationDate"
+        >
+          <div class="balance" style="color: #f44336">$ {{ card.balance }}</div>
+
+        </app-card>
+
+        <!-- Botones de Angular Material para las acciones -->
+        <button mat-raised-button color="warn" (click)="payWithCreditCard(card.card_number, 100)">
+          Pagar con Tarjeta
+        </button>
+        <button mat-raised-button color="accent" (click)="payCreditCardDebt(card.card_number, 100)">
+          Pagar Deuda
+        </button>
+      </div>
+    }
+  </div>
+
+  <div class="card-section">
+    <h2>Tarjetas de Débito</h2>
+    @for (card of debitCardList; track card.card_number) {
+      <div class="card-wrapper">
+        <app-card
+          [cardNumber]="card.card_number"
+          [cardHolder]="card.card_holder_name"
+          [expirationDate]="card.expiration_date | expirationDate"
+        >
+          <div class="balance">$ {{ card.balance }}</div>
+
+        </app-card>
+
+        <!-- Botones de Angular Material para las acciones -->
+        <button mat-raised-button color="warn" (click)="payWithDebitCard(card.card_number, 100)">
+          Pagar con Tarjeta
+        </button>
+        <button mat-raised-button color="accent" (click)="depositToDebitCard(card.card_number, 100)">
+          Depositar Dinero
+        </button>
+      </div>
+    }
+  </div>
+
+  @if (errorResponseAfterRequest != '') {
+    <div class="error-message">
+      <mat-error>ERROR: {{ errorResponseAfterRequest }}</mat-error>
+    </div>
+  }
+</div>

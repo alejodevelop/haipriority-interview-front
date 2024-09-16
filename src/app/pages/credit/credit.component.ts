@@ -9,6 +9,7 @@ import {ExpirationDatePipe} from "../../shared/pipes/expiration-date.pipe";
 import {MatButton} from "@angular/material/button";
 import {MatError} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
+import {CreditCardStoreService} from "../../stores/credit-card-store.service";
 
 @Component({
   selector: 'app-credit',
@@ -21,7 +22,7 @@ export class CreditComponent implements OnInit {
   cardList: CreditCardData[] = [];
   errorResponseAfterRequest = '';
 
-  constructor(private creditService: CreditService) {
+  constructor(private creditService: CreditService, private creditCardStore: CreditCardStoreService) {
 
   }
 
@@ -72,6 +73,7 @@ export class CreditComponent implements OnInit {
           } as CreditCardData));
 
           this.cardList.push(response);
+          this.creditCardStore.setCardList(this.cardList);
           this.errorResponseAfterRequest = '';
 
           await Swal.fire({
@@ -131,7 +133,7 @@ export class CreditComponent implements OnInit {
             }
             return card;
           });
-
+          this.creditCardStore.setCardList(this.cardList);
           this.errorResponseAfterRequest = '';
 
           await Swal.fire({
@@ -164,6 +166,7 @@ export class CreditComponent implements OnInit {
         this.creditService.deleteCreditCard(cardNumber).subscribe({
           next: () => {
             this.cardList = this.cardList.filter(card => card.card_number !== cardNumber);
+            this.creditCardStore.setCardList(this.cardList);
           },
           error: this.handleError.bind(this)
         });
@@ -182,7 +185,7 @@ export class CreditComponent implements OnInit {
     if (response) {
       this.errorResponseAfterRequest = '';
       this.cardList = response;
-      console.log(response);
+      this.creditCardStore.setCardList(response);
     }
   }
 
