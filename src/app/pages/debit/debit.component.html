@@ -1,0 +1,31 @@
+<div class="container">
+  <h1 class="page-title">Tarjetas de Débito</h1>
+
+  <button mat-raised-button color="primary" (click)="onCreateCard()" class="add-card-button">
+    <mat-icon>add</mat-icon>
+    Añadir Tarjeta
+  </button>
+
+  @if (errorResponse() != '') {
+    <br>
+    <mat-error>ERROR: {{ errorResponse() }}</mat-error>
+  }
+
+  <div class="card-list">
+    @for (item of cardList; track item.card_number) {
+
+      <app-card
+        [cardNumber]="item.card_number"
+        [cardHolder]="item.card_holder_name"
+        [expirationDate]="item.expiration_date | expirationDate"
+        (deleteCard)="onDeleteCard($event)"
+        (editCard)="onEditCard($event)"
+      >
+        <div class="balance">$ {{ item.balance }}</div>
+      </app-card>
+
+    }
+
+  </div>
+
+</div>

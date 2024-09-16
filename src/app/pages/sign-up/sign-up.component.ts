@@ -4,7 +4,7 @@ import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {AuthFormComponent} from "../../shared/components/auth-form/auth-form.component";
 import {BannerComponent} from "../../shared/components/banner/banner.component";
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
-import {UserResponse} from "../../shared/dto/userResponse";
+import {UserResponse} from "../../dto/userResponse";
 import {SignUpService} from "./sign-up.service";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";

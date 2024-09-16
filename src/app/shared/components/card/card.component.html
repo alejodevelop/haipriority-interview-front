@@ -1,0 +1,24 @@
+<div class="card-container" (click)="flipCard()">
+  <div class="card" [class.flipped]="isFlipped">
+    <!-- Cara frontal de la tarjeta -->
+    <div class="card-front">
+      <div class="card-chip"></div>
+      <div class="card-holder">{{ cardHolder }}</div>
+      <div class="card-buttons">
+        <button class="edit-button" (click)="edit($event)">✎</button>
+        <button class="delete-button" (click)="delete($event)">✘</button>
+      </div>
+    </div>
+
+    <!-- Cara trasera de la tarjeta -->
+    <div class="card-back">
+      <div class="magnetic-strip"></div>
+      <div class="card-number">{{ cardNumber }}</div>
+      <div class="card-cvv">cvv: {{ cvv }}</div>
+      <div class="card-expiration">vec: {{ expirationDate }}</div>
+    </div>
+  </div>
+</div>
+
+<ng-content></ng-content>
+

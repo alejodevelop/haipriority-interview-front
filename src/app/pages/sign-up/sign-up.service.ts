@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from "../../shared/services/http.service";
 import {catchError, Observable, throwError} from "rxjs";
-import {UserResponse} from "../../shared/dto/userResponse";
-import {LoginData} from "../../shared/dto/loginData";
+import {UserResponse} from "../../dto/userResponse";
+import {LoginData} from "../../dto/loginData";
 
 
 @Injectable({

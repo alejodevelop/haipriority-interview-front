@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable, throwError} from 'rxjs';
-import {LoginData} from "../shared/dto/loginData";
+import {LoginData} from "../dto/loginData";
 import {HttpService} from "../shared/services/http.service";
-import {LoginResponse} from "../shared/dto/loginResponse";
+import {LoginResponse} from "../dto/loginResponse";
 import {jwtDecode} from 'jwt-decode';
 
 
