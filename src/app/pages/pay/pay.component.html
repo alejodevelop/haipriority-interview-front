@@ -15,10 +15,10 @@
         </app-card>
 
         <!-- Botones de Angular Material para las acciones -->
-        <button mat-raised-button color="warn" (click)="payWithCreditCard(card.card_number, 100)">
+        <button mat-raised-button color="warn" (click)="payWithCreditCard(card.card_number)">
           Pagar con Tarjeta
         </button>
-        <button mat-raised-button color="accent" (click)="payCreditCardDebt(card.card_number, 100)">
+        <button mat-raised-button color="accent" (click)="payCreditCardDebt(card.card_number)">
           Pagar Deuda
         </button>
       </div>
@@ -38,10 +38,10 @@
 
         </app-card>
 
-        <button mat-raised-button color="warn" (click)="payWithDebitCard(card.card_number, 100)">
+        <button mat-raised-button color="warn" (click)="payWithDebitCard(card.card_number)">
           Pagar con Tarjeta
         </button>
-        <button mat-raised-button color="accent" (click)="depositToDebitCard(card.card_number, 100)">
+        <button mat-raised-button color="accent" (click)="depositToDebitCard(card.card_number)">
           Depositar Dinero
         </button>
       </div>

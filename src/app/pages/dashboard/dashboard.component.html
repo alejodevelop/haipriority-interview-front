@@ -1,0 +1,43 @@
+<div class="container">
+  <h1 class="page-title">Dashboard</h1>
+
+  <div class="statistics">
+    <div class="stat-item">
+      <h3>Dinero en Tarjetas de Débito</h3>
+      <p>{{ totalDebitMoney | currency }}</p>
+    </div>
+
+    <div class="stat-item">
+      <h3>Deuda en Tarjetas de Crédito</h3>
+      <p style="color: #f44336;">{{ totalCreditDebt | currency }}</p>
+    </div>
+
+    <div class="stat-item">
+      <h3>Deuda en Préstamos</h3>
+      <p style="color: #f44336;">{{ totalLoanDebt | currency }}</p>
+    </div>
+  </div>
+
+  <!-- Gráficos -->
+  <div class="chart-container">
+    <h3>Dinero vs Deuda</h3>
+    <canvas
+      #pieChart
+      baseChart
+      [data]="pieChartData"
+      [type]="pieChartType"
+      [options]="pieChartOptions"
+    ></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h3>Saldos en Productos Financieros</h3>
+    <canvas
+      #barChart
+      baseChart
+      [data]="barChartData"
+      [type]="stackedBarChartType"
+      [options]="stackedBarChartOptions"
+    ></canvas>
+  </div>
+</div>

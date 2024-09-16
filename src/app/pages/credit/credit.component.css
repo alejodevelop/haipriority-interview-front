@@ -1,15 +1,15 @@
 .container {
   padding: 20px;
   text-align: center;
-  max-width: 1200px; /* Limita el ancho máximo del contenedor */
-  margin: 0 auto; /* Centra el contenedor */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .page-title {
-  font-size: 2.5rem; /* Aumenta el tamaño de la fuente */
-  margin-bottom: 30px;
-  font-weight: bold;
-  color: #3f51b5; /* Color primario de Material Design */
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  color: #005cbb;
 }
 
 .card-list {

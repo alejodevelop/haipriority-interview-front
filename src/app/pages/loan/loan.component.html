@@ -16,7 +16,7 @@
         <p><strong>Fecha de Inicio:</strong> {{ loan.start_date | date }}</p>
         <p><strong>Fecha de Fin:</strong> {{ loan.end_date | date }}</p>
         <div class="loan-actions">
-          <button (click)="payoffLoan(loan.id, 100)" class="action-button">Pagar Deuda</button>
+          <button (click)="payoffLoan(loan.id)" class="action-button">Pagar Deuda</button>
           <button (click)="deleteLoan(loan.id)" class="action-button delete-button">Eliminar Préstamo</button>
         </div>
       </div>

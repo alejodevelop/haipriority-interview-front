@@ -122,7 +122,7 @@ export class CreditComponent implements OnInit {
         }
 
         try {
-          const response = await lastValueFrom(this.creditService.editCreditCard({
+          await lastValueFrom(this.creditService.editCreditCard({
             card_number: cardData.cardNumber,
             card_holder_name: cardName,
           } as CreditCardData));

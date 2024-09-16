@@ -85,26 +85,47 @@ export class LoanComponent implements OnInit {
     });
   }
 
-  async payoffLoan(loanId: number, amount: number) {
-    try {
-      const response = await lastValueFrom(this.loanService.payoffLoan(loanId, amount));
-      this.loanList = this.loanList.map(loan => {
-        if (loan.id === loanId) {
-          loan.balance -= amount;
+  async payoffLoan(loanId: number) {
+    const {value: amount} = await Swal.fire({
+      title: 'Pagar Deuda',
+      input: 'number',
+      inputLabel: 'Monto a pagar',
+      inputPlaceholder: 'Ingrese el monto a pagar',
+      showCancelButton: true,
+      confirmButtonText: 'Pagar',
+      confirmButtonColor: '#005cbb',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: 'red',
+      inputValidator: (value) => {
+        const amount = parseFloat(value);
+        if (!value || isNaN(amount) || amount <= 0) {
+          return 'El monto es obligatorio y debe ser mayor que cero';
         }
-        return loan;
-      });
-      this.loanStore.setLoanList(this.loanList);
-      this.errorResponseAfterRequest = '';
+        return null;
+      }
+    });
 
-      await Swal.fire({
-        title: '¡Genial! 😎',
-        text: 'Abono exitoso!',
-        icon: 'success',
-        confirmButtonColor: '#005cbb'
-      });
-    } catch (error) {
-      this.handleError(error);
+    if (amount) {
+      try {
+        await lastValueFrom(this.loanService.payoffLoan(loanId, parseFloat(amount)));
+        this.loanList = this.loanList.map(loan => {
+          if (loan.id === loanId) {
+            loan.balance -= parseFloat(amount);
+          }
+          return loan;
+        });
+        this.loanStore.setLoanList(this.loanList);
+        this.errorResponseAfterRequest = '';
+
+        await Swal.fire({
+          title: '¡Genial! 😎',
+          text: 'Abono exitoso!',
+          icon: 'success',
+          confirmButtonColor: '#005cbb'
+        });
+      } catch (error) {
+        this.handleError(error);
+      }
     }
   }
 

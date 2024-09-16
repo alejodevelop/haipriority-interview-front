@@ -139,7 +139,7 @@ export class DebitComponent implements OnInit {
         }
 
         try {
-          const response = await lastValueFrom(this.debitService.editDebitCard({
+          await lastValueFrom(this.debitService.editDebitCard({
             card_holder_name: cardName,
             card_number: cardData.cardNumber
           } as DebitCardData));

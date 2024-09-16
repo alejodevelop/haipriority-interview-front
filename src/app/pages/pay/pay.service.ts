@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from "../../shared/services/http.service";
-import {Observable} from "rxjs";
-import {catchError, throwError} from "rxjs";
+import {Observable, catchError, throwError} from "rxjs";
 import {DebitCardData} from "../../dto/debitCardData";
 import {CreditCardData} from "../../dto/creditCardData";
 

@@ -69,67 +69,151 @@ export class PayComponent implements OnInit {
   }
 
 
-  async payWithCreditCard(cardNumber: string, amount: number) {
-    try {
-      await lastValueFrom(this.payService.payWithCreditCard(cardNumber, amount));
-      this.errorResponseAfterRequest = '';
-      this.creditCardList = this.creditCardList.map(card => {
-        if (card.card_number === cardNumber) {
-          card.balance += amount;
+  async payWithCreditCard(cardNumber: string) {
+    const {value: amount} = await Swal.fire({
+      title: 'Pagar con Tarjeta de Crédito',
+      input: 'number',
+      inputLabel: 'Monto a pagar',
+      inputPlaceholder: 'Ingrese el monto a pagar',
+      showCancelButton: true,
+      confirmButtonText: 'Pagar',
+      confirmButtonColor: '#005cbb',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: 'red',
+      inputValidator: (value) => {
+        const amount = parseFloat(value);
+        if (!value || isNaN(amount) || amount <= 0) {
+          return 'El monto es obligatorio y debe ser mayor que cero';
         }
-        return card
-      });
-      await Swal.fire('¡Genial! 😎', 'Pago realizado con éxito!', 'success');
-    } catch (error) {
-      this.handleError(error);
+        return null;
+      }
+    });
+
+    if (amount) {
+      try {
+        await lastValueFrom(this.payService.payWithCreditCard(cardNumber, parseFloat(amount)));
+        this.errorResponseAfterRequest = '';
+        this.creditCardList = this.creditCardList.map(card => {
+          if (card.card_number === cardNumber) {
+            card.balance += parseFloat(amount);
+          }
+          return card;
+        });
+        await Swal.fire('¡Genial! 😎', 'Pago realizado con éxito!', 'success');
+      } catch (error) {
+        this.handleError(error);
+      }
     }
   }
 
-  async payCreditCardDebt(cardNumber: string, amount: number) {
-    try {
-      await lastValueFrom(this.payService.payOffCreditCard(cardNumber, amount));
-      this.errorResponseAfterRequest = '';
-      this.creditCardList = this.creditCardList.map(card => {
-        if (card.card_number === cardNumber) {
-          card.balance -= amount;
+  async payCreditCardDebt(cardNumber: string) {
+    const {value: amount} = await Swal.fire({
+      title: 'Pagar Deuda de Tarjeta de Crédito',
+      input: 'number',
+      inputLabel: 'Monto a pagar',
+      inputPlaceholder: 'Ingrese el monto a pagar',
+      showCancelButton: true,
+      confirmButtonText: 'Pagar',
+      confirmButtonColor: '#005cbb',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: 'red',
+      inputValidator: (value) => {
+        const amount = parseFloat(value);
+        if (!value || isNaN(amount) || amount <= 0) {
+          return 'El monto es obligatorio y debe ser mayor que cero';
         }
-        return card
-      });
-      await Swal.fire('¡Genial! 😎', 'Deuda pagada con éxito!', 'success');
-    } catch (error) {
-      this.handleError(error);
+        return null;
+      }
+    });
+
+    if (amount) {
+      try {
+        await lastValueFrom(this.payService.payOffCreditCard(cardNumber, parseFloat(amount)));
+        this.errorResponseAfterRequest = '';
+        this.creditCardList = this.creditCardList.map(card => {
+          if (card.card_number === cardNumber) {
+            card.balance -= parseFloat(amount);
+          }
+          return card;
+        });
+        await Swal.fire('¡Genial! 😎', 'Deuda pagada con éxito!', 'success');
+      } catch (error) {
+        this.handleError(error);
+      }
     }
   }
 
-  async payWithDebitCard(cardNumber: string, amount: number) {
-    try {
-      await lastValueFrom(this.payService.payWithDebitCard(cardNumber, amount));
-      this.errorResponseAfterRequest = '';
-      this.debitCardList = this.debitCardList.map(card => {
-        if (card.card_number === cardNumber) {
-          card.balance -= amount;
+  async payWithDebitCard(cardNumber: string) {
+    const {value: amount} = await Swal.fire({
+      title: 'Pagar con Tarjeta de Débito',
+      input: 'number',
+      inputLabel: 'Monto a pagar',
+      inputPlaceholder: 'Ingrese el monto a pagar',
+      showCancelButton: true,
+      confirmButtonText: 'Pagar',
+      confirmButtonColor: '#005cbb',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: 'red',
+      inputValidator: (value) => {
+        const amount = parseFloat(value);
+        if (!value || isNaN(amount) || amount <= 0) {
+          return 'El monto es obligatorio y debe ser mayor que cero';
         }
-        return card
-      });
-      await Swal.fire('¡Genial! 😎', 'Pago realizado con éxito!', 'success');
-    } catch (error) {
-      this.handleError(error);
+        return null;
+      }
+    });
+
+    if (amount) {
+      try {
+        await lastValueFrom(this.payService.payWithDebitCard(cardNumber, parseFloat(amount)));
+        this.errorResponseAfterRequest = '';
+        this.debitCardList = this.debitCardList.map(card => {
+          if (card.card_number === cardNumber) {
+            card.balance -= parseFloat(amount);
+          }
+          return card;
+        });
+        await Swal.fire('¡Genial! 😎', 'Pago realizado con éxito!', 'success');
+      } catch (error) {
+        this.handleError(error);
+      }
     }
   }
 
-  async depositToDebitCard(cardNumber: string, amount: number) {
-    try {
-      await lastValueFrom(this.payService.depositToDebitCard(cardNumber, amount));
-      this.errorResponseAfterRequest = '';
-      this.debitCardList = this.debitCardList.map(card => {
-        if (card.card_number === cardNumber) {
-          card.balance += amount;
+  async depositToDebitCard(cardNumber: string) {
+    const {value: amount} = await Swal.fire({
+      title: 'Depositar a Tarjeta de Débito',
+      input: 'number',
+      inputLabel: 'Monto a depositar',
+      inputPlaceholder: 'Ingrese el monto a depositar',
+      showCancelButton: true,
+      confirmButtonText: 'Depositar',
+      confirmButtonColor: '#005cbb',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: 'red',
+      inputValidator: (value) => {
+        const amount = parseFloat(value);
+        if (!value || isNaN(amount) || amount <= 0) {
+          return 'El monto es obligatorio y debe ser mayor que cero';
         }
-        return card
-      });
-      await Swal.fire('¡Genial! 😎', 'Depósito realizado con éxito!', 'success');
-    } catch (error) {
-      this.handleError(error);
+        return null;
+      }
+    });
+
+    if (amount) {
+      try {
+        await lastValueFrom(this.payService.depositToDebitCard(cardNumber, parseFloat(amount)));
+        this.errorResponseAfterRequest = '';
+        this.debitCardList = this.debitCardList.map(card => {
+          if (card.card_number === cardNumber) {
+            card.balance += parseFloat(amount);
+          }
+          return card;
+        });
+        await Swal.fire('¡Genial! 😎', 'Depósito realizado con éxito!', 'success');
+      } catch (error) {
+        this.handleError(error);
+      }
     }
   }
 
